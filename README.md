@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Retrofit Image Upload
 
 Uploading Image using Retrofit.
@@ -9,3 +10,6 @@ Visit Blog Post [Android Upload Image File Using Retrofit 2.0](http://www.pratik
 Note: Follow answers for **OKHTTP** on StackOverflow [Single Image Upload using OkHttp](http://stackoverflow.com/a/34127008/1318946) and [Multiple Image Upload using OkHttp](http://stackoverflow.com/a/34411666/1318946)
 
 Thank you. Keep Sharing.
+=======
+# RetrofitImageUpload
+>>>>>>> 89c8bbe59a230f075dae0fc74396f832149c0431
