@@ -139,22 +139,55 @@ public class MainActivity extends AppCompatActivity {
 
         File file = new File(imagePath);
 
-        RequestBody filename = RequestBody.create(MediaType.parse("text/plain"), file.getName());
+
+        RequestBody filename = RequestBody.create(MediaType.parse("multipart/form-data"), file);
+
+
 
 
         MultipartBody.Part fileToUpload = MultipartBody.Part.createFormData("image[]", file.getName(), filename);
 
+        String descriptionString = "hello, this is description speaking";
+        RequestBody description =
+                RequestBody.create(
+                        okhttp3.MultipartBody.FORM, descriptionString);
+
+
 
         ApiService getResponse =RetroClient.getRetrofit().create(ApiService.class);
-        Call call = getResponse.uploadFile(fileToUpload, filename);
+        Call call = getResponse.uploadFile(fileToUpload, description);
 
-        call.enqueue(new Callback<Result>() {
+
+        call.enqueue(new Callback() {
+            @Override
+            public void onResponse(Call call, Response response) {
+                if (response.isSuccessful()) {
+                    progressDialog.dismiss();
+                    Log.d("success","success");
+
+
+                } else {
+                    Log.d("failur",response.message());
+
+                    progressDialog.dismiss();
+                    Snackbar.make(parentView, R.string.string_upload_fail, Snackbar.LENGTH_LONG).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call call, Throwable t) {
+
+            }
+        });
+
+
+      /*  call.enqueue(new Callback<Result>() {
             @Override
             public void onResponse(Call<Result> call, Response<Result> response) {
                 if (response.isSuccessful()) {
                     progressDialog.dismiss();
 
-                    if (response.body().getResult().equals("success"))
+                    if (response.body().getName()!=null)
                         Snackbar.make(parentView, R.string.string_upload_success, Snackbar.LENGTH_LONG).show();
                     else
                         Snackbar.make(parentView, R.string.string_upload_fail, Snackbar.LENGTH_LONG).show();
@@ -165,9 +198,9 @@ public class MainActivity extends AppCompatActivity {
                     Snackbar.make(parentView, R.string.string_upload_fail, Snackbar.LENGTH_LONG).show();
                 }
 
-                /**
+                *//**
                  * Update Views
-                 */
+                 *//*
                 imagePath = "";
                 textView.setVisibility(View.VISIBLE);
                 imageView.setVisibility(View.INVISIBLE);
@@ -181,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+*/
     }
 
     /**
