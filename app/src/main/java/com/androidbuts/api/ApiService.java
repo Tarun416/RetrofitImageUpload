@@ -2,6 +2,8 @@ package com.androidbuts.api;
 
 import com.androidbuts.api.response.Result;
 
+import java.util.List;
+
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
@@ -22,7 +24,10 @@ public interface ApiService {
 
     @Multipart
     @POST("upload/")
+    @Headers({
+            "Accept: application/json",
+    })
 
-    Call<Result> uploadFile(@Part MultipartBody.Part file, @Part("description") RequestBody name);
+    Call<List<Result>> uploadFile(@Part MultipartBody.Part file, @Part("description") RequestBody name);
 
 }

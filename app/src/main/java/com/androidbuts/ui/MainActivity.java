@@ -30,6 +30,7 @@ import com.androidbuts.utils.InternetConnection;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
+import java.util.List;
 
 import okhttp3.MediaType;
 import okhttp3.MultipartBody;
@@ -155,15 +156,15 @@ public class MainActivity extends AppCompatActivity {
 
 
         ApiService getResponse =RetroClient.getRetrofit().create(ApiService.class);
-        Call call = getResponse.uploadFile(fileToUpload, description);
+        Call<List<Result>> call = getResponse.uploadFile(fileToUpload, description);
 
 
-        call.enqueue(new Callback() {
+        call.enqueue(new Callback<List<Result>>() {
             @Override
-            public void onResponse(Call call, Response response) {
+            public void onResponse(Call<List<Result>> call1, Response<List<Result>> response) {
                 if (response.isSuccessful()) {
                     progressDialog.dismiss();
-                    Log.d("success","success");
+                    Log.d("success","success  " +  response.body());
 
 
                 } else {
@@ -175,10 +176,15 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call call, Throwable t) {
-
+            public void onFailure(Call<List<Result>> call, Throwable t) {
+                progressDialog.dismiss();
+                Log.d("failure",t.getMessage());
+                Log.d("failure",t.getCause()+"");
             }
         });
+
+
+
 
 
       /*  call.enqueue(new Callback<Result>() {
